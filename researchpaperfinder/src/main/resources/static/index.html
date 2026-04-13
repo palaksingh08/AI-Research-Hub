@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Research Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5B21B6;
+            --primary-light: #7C3AED;
+            --primary-dark: #4C1D95;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --dark-bg: #0F172A;
+            --dark-card: #1E293B;
+            --light-bg: #F8FAFC;
+            --light-card: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --glow-primary: rgba(123, 58, 237, 0.5);
+            --glow-secondary: rgba(236, 72, 153, 0.4);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html.dark-mode {
+            --text-dark: #FFFFFF;
+            --text-light: #CBD5E1;
+            --border: #334155;
+            --light-bg: #0F172A;
+            --light-card: #1E293B;
+            --glow-primary: rgba(124, 58, 237, 0.4);
+            --glow-secondary: rgba(236, 72, 153, 0.4);
+        }
+
+        html.dark-mode body {
+            background: linear-gradient(135deg, #0F172A 0%, #1A1F35 50%, #16213E 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F8FAFC 0%, #E0E7FF 50%, #F3E8FF 100%);
+            color: var(--text-dark);
+            transition: var(--transition);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, var(--glow-primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--glow-secondary) 0%, transparent 50%);
+            pointer-events: none;
+            animation: bgShift 8s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 0.5; filter: blur(50px); }
+            50% { opacity: 0.8; filter: blur(80px); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 6px;
+            box-shadow: 0 0 10px var(--glow-primary);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+        }
+
+        html.dark-mode .navbar {
+            background: rgba(12, 23, 42, 0.78);
+        }
+
+        html.dark-mode .search-container,
+        html.dark-mode .filter-group,
+        html.dark-mode .hero-metric,
+        html.dark-mode .assistant-refresh,
+        html.dark-mode .assistant-message.bot .assistant-message-bubble,
+        html.dark-mode .assistant-compose textarea,
+        html.dark-mode .empty-state-card,
+        html.dark-mode .loading-card {
+            background: rgba(15, 23, 42, 0.78);
+            border-color: rgba(148, 163, 184, 0.18);
+            box-shadow: 0 20px 36px rgba(2, 6, 23, 0.36);
+        }
+
+        html.dark-mode #searchInput,
+        html.dark-mode .filter-group input,
+        html.dark-mode .filter-group select {
+            background: rgba(30, 41, 59, 0.92);
+            color: var(--text-dark);
+        }
+
+        html.dark-mode .paper-stat {
+            background: linear-gradient(135deg, rgba(91, 33, 182, 0.18), rgba(236, 72, 153, 0.14));
+            border-color: rgba(167, 139, 250, 0.22);
+        }
+
+        html.dark-mode .assistant-fab::after {
+            background: rgba(241, 245, 249, 0.92);
+            color: #0f172a;
+        }
+
+        html.dark-mode .assistant-badge {
+            border-color: #0f172a;
+        }
+
+        html.dark-mode .modal-section,
+        html.dark-mode .modal-content {
+            background: rgba(15, 23, 42, 0.92);
+        }
+
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.8), transparent);
+            box-shadow: 0 0 20px var(--glow-primary);
+        }
+
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar-brand {
+            font-size: 1.45rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f172a, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            filter: none;
+            cursor: pointer;
+        }
+
+        .navbar-brand i {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.64);
+            color: var(--text-dark);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+            position: relative;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.22);
+            box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--secondary), #EC4899);
+            color: white;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+        }
+
+        .badge-counter {
+            background: linear-gradient(135deg, #0f172a, #334155);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(59, 130, 246, 0.16);
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.15) rotateZ(20deg);
+            box-shadow: 0 18px 28px rgba(15, 23, 42, 0.12);
+        }
+
+        .hero {
+            padding: 4.7rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -18%;
+            width: 620px;
+            height: 620px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.14), transparent 62%);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+            filter: blur(64px);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -18%;
+            left: -15%;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.14), transparent 60%);
+            border-radius: 50%;
+            animation: float 25s infinite ease-in-out reverse;
+            filter: blur(72px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1040px;
+            margin: 0 auto;
+            animation: slideDown 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.8rem);
+            font-weight: 800;
+            margin-bottom: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.05em;
+            line-height: 1.04;
+        }
+
+        .native-emoji {
+            display: inline-block;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
+            color: initial;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+            font-style: normal;
+            filter: none;
+        }
+
+        .hero h1 .native-emoji,
+        .page h1 .native-emoji {
+            margin-right: 0.18em;
+        }
+
+        .filter-group label .native-emoji,
+        .paper-authors .native-emoji,
+        .badge .native-emoji,
+        .modal-section-title .native-emoji,
+        footer .native-emoji {
+            margin-right: 0.32rem;
+        }
+
+        .hero p {
+            font-size: 1.08rem;
+            color: var(--text-light);
+            margin-bottom: 2.1rem;
+            font-weight: 600;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 0.7rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem;
+            border-radius: 24px;
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            position: relative;
+            backdrop-filter: blur(18px);
+        }
+
+        .search-input-wrap {
+            flex: 1;
+            position: relative;
+            min-width: 0;
+        }
+
+        #searchInput {
+            width: 100%;
+            border: none;
+            background: rgba(243, 246, 244, 0.95);
+            padding: 1.05rem 4.2rem 1.05rem 1.2rem;
+            font-size: 1rem;
+            outline: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            border-radius: 18px;
+        }
+
+        #searchInput::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-history {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--light-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+            z-index: 10;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-history.active {
+            display: block;
+        }
+
+        .history-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:hover {
+            background: var(--light-bg);
+            color: var(--primary);
+        }
+
+        .history-item-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .history-delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .history-delete-btn:hover {
+            background: #dc2626;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 0 20px var(--glow-primary), 0 4px 15px rgba(91, 33, 182, 0.3);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px var(--glow-primary), 0 8px 25px rgba(91, 33, 182, 0.4);
+        }
+
+        .voice-btn {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 14px 28px rgba(91, 33, 182, 0.22);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-input-wrap .voice-btn {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 18px 30px rgba(91, 33, 182, 0.28);
+        }
+
+        .voice-btn.listening {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            animation: pulse 1.1s ease-in-out infinite, ringPulse 1.1s ease-in-out infinite;
+        }
+
+        .voice-status {
+            margin-top: -0.7rem;
+            font-size: 0.92rem;
+            color: var(--text-light);
+            text-align: left;
+            padding-left: 0.6rem;
+            font-weight: 600;
+        }
+
+        @keyframes ringPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45); }
+            100% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+        }
+
+        .assistant-panel {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 5.8rem;
+            width: min(380px, calc(100vw - 2rem));
+            height: min(560px, calc(100vh - 7rem));
+            margin: 0;
+            padding: 0;
+            border-radius: 22px;
+            background:
+                linear-gradient(135deg, rgba(15, 23, 42, 0.02), rgba(59, 130, 246, 0.05)),
+                var(--light-card);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            box-shadow: 0 26px 54px rgba(15, 23, 42, 0.08);
+            z-index: 220;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(24px) scale(0.96);
+            transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .assistant-panel.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .assistant-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .assistant-shell {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto auto;
+            height: 100%;
+        }
+
+        .assistant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.95rem 1rem 0.85rem;
+            border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38));
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+        }
+
+        .assistant-kicker {
+            display: inline-block;
+            margin-bottom: 0.18rem;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #1d4ed8;
+            font-weight: 800;
+        }
+
+        .assistant-header h2 {
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+
+        .assistant-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.12rem;
+            font-weight: 600;
+        }
+
+        .assistant-refresh {
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: rgba(255, 255, 255, 0.75);
+            color: var(--text-dark);
+            border-radius: 999px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .assistant-refresh:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .assistant-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            overflow-y: auto;
+            padding: 0.95rem 0.9rem 0.35rem;
+            min-height: 0;
+        }
+
+        .assistant-message {
+            max-width: 100%;
+            display: flex;
+            gap: 0.55rem;
+            animation: messageFadeIn 0.22s ease;
+        }
+
+        @keyframes messageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .assistant-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            flex: 0 0 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.12);
+        }
+
+        .assistant-message.bot .assistant-avatar {
+            background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+            color: white;
+        }
+
+        .assistant-message.user .assistant-avatar {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            color: #0f172a;
+            order: 2;
+        }
+
+        .assistant-message-content {
+            display: grid;
+            gap: 0.22rem;
+            min-width: 0;
+            max-width: calc(100% - 42px);
+        }
+
+        .assistant-message-meta {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--text-light);
+            padding: 0 0.2rem;
+        }
+
+        .assistant-message-bubble {
+            padding: 0.78rem 0.9rem;
+            border-radius: 18px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .assistant-message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .assistant-message.user .assistant-message-meta {
+            color: rgba(91, 33, 182, 0.82);
+            text-align: right;
+        }
+
+        .assistant-message.user .assistant-message-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 14px 28px rgba(123, 58, 237, 0.14);
+            border-bottom-right-radius: 6px;
+        }
+
+        .assistant-message.bot {
+            align-self: flex-start;
+        }
+
+        .assistant-message.bot .assistant-message-bubble {
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            color: var(--text-dark);
+            border-bottom-left-radius: 6px;
+        }
+
+        .assistant-message.typing .assistant-message-bubble {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .assistant-typing-text {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-left: 0.18rem;
+            font-weight: 600;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: bounceDots 1s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.24s;
+        }
+
+        @keyframes bounceDots {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+            40% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .assistant-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            padding: 0.15rem 0.9rem 0.75rem;
+        }
+
+        .assistant-chip {
+            border: 1px solid rgba(123, 58, 237, 0.16);
+            background: linear-gradient(135deg, rgba(123, 58, 237, 0.08), rgba(236, 72, 153, 0.08));
+            color: var(--text-dark);
+            border-radius: 999px;
+            padding: 0.42rem 0.74rem;
+            font-weight: 700;
+            font-size: 0.76rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 18px rgba(91, 33, 182, 0.08);
+        }
+
+        .assistant-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(91, 33, 182, 0.14);
+        }
+
+        .assistant-compose {
+            padding: 0 0.9rem 0.9rem;
+        }
+
+        .assistant-input-wrap {
+            position: relative;
+        }
+
+        .assistant-compose textarea {
+            width: 100%;
+            min-height: 56px;
+            max-height: 120px;
+            resize: none;
+            border-radius: 18px;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: rgba(255, 255, 255, 0.76);
+            color: var(--text-dark);
+            padding: 0.95rem 3.6rem 0.95rem 1rem;
+            font: inherit;
+            outline: none;
+            line-height: 1.45;
+        }
+
+        .assistant-compose textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(123, 58, 237, 0.12);
+        }
+
+        .assistant-send-btn {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 22px rgba(91, 33, 182, 0.24);
+        }
+
+        .assistant-fab {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.4rem;
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 18px 34px rgba(91, 33, 182, 0.28);
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 230;
+        }
+
+        .assistant-fab:hover,
+        .assistant-fab.active {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 22px 40px rgba(91, 33, 182, 0.34);
+        }
+
+        .assistant-fab::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 74px;
+            white-space: nowrap;
+            background: rgba(15, 23, 42, 0.88);
+            color: white;
+            padding: 0.5rem 0.72rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateX(8px);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .assistant-fab:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .assistant-badge {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #22c55e;
+            border: 2px solid white;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem auto 1rem;
+            max-width: 1400px;
+            padding: 0 2rem;
+        }
+
+        .filter-group {
+            background: rgba(255, 255, 255, 0.72);
+            padding: 1.1rem;
+            border-radius: 22px;
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            transition: var(--transition);
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(14px);
+        }
+
+        .filter-group:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 34px rgba(15, 23, 42, 0.09);
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.8rem 0.9rem;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            border-radius: 14px;
+            background: rgba(243, 246, 244, 0.92);
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 1400px;
+            margin: 1rem auto 1.4rem;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary, .btn-danger {
+            padding: 0.82rem 1.3rem;
+            border: none;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--accent), #D97706);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #DC2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1.35rem;
+        }
+
+        .hero-metric {
+            padding: 1rem 1.15rem;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+            text-align: left;
+            backdrop-filter: blur(14px);
+        }
+
+        .hero-metric strong {
+            display: block;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .hero-metric span {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background:
+                radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 26%),
+                linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 24px 42px rgba(37, 99, 235, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.4rem;
+            margin: 1.6rem 0 2rem;
+        }
+
+        .paper-card {
+            background: var(--light-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            animation: cardSlide 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 20px var(--glow-primary);
+        }
+
+        .paper-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px var(--glow-primary), var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .paper-card:hover .action-btn,
+        .paper-card:hover .paper-stat {
+            transform: translateY(-1px);
+        }
+
+        .paper-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+            transition: color var(--transition);
+        }
+
+        .paper-card:hover .paper-title {
+            color: var(--primary);
+        }
+
+        .paper-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 0.2rem;
+        }
+
+        .paper-rank {
+            min-width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(91, 33, 182, 0.12), rgba(236, 72, 153, 0.16));
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .paper-authors {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .paper-section-label {
+            display: none;
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .paper-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+
+        .paper-stat {
+            padding: 0.72rem 0.8rem;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(91, 33, 182, 0.08), rgba(236, 72, 153, 0.08));
+            border: 1px solid rgba(123, 58, 237, 0.14);
+            transition: var(--transition);
+        }
+
+        .paper-stat-label {
+            display: block;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+            font-weight: 700;
+        }
+
+        .paper-stat-value {
+            font-size: 0.94rem;
+            color: var(--text-dark);
+            font-weight: 800;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 0 10px var(--glow-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .badge.venue {
+            background: linear-gradient(135deg, var(--accent), #D97706);
+        }
+
+        .paper-abstract {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            max-height: 78px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+
+        .paper-actions {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 88px;
+            padding: 0.82rem 0.7rem;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+        }
+
+        .read-btn {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        }
+
+        .read-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--glow-primary);
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #334155, #475569);
+        }
+
+        .save-btn.saved {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .save-btn:hover, .save-btn.saved:hover {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .details-btn {
+            background: linear-gradient(135deg, #0f172a, #334155);
+            padding: 0.6rem 0.8rem;
+        }
+
+        .details-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state-card {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            box-shadow: 0 20px 36px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(16px);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .empty-state h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background: var(--light-card);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 40px var(--glow-primary);
+            animation: slideDown 0.3s ease;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin: 1rem 0;
+            clear: both;
+        }
+
+        .modal-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .modal-section-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-text {
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            min-width: 120px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .collection-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .collection-item {
+            background: var(--light-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .collection-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--glow-primary);
+            transform: translateY(-4px);
+        }
+
+        .collection-count {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem auto;
+            font-weight: 700;
+        }
+
+        .reading-item {
+            background: var(--light-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            margin: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .reading-item:hover {
+            box-shadow: 0 0 20px var(--glow-primary);
+        }
+
+        .reading-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            margin: 0.5rem 0;
+        }
+
+        .status-to-read {
+            background: var(--accent);
+        }
+
+        .status-reading {
+            background: var(--primary);
+        }
+
+        .status-completed {
+            background: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            background: linear-gradient(to top, var(--light-bg), transparent);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes cardSlide {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-loading {
+            display: grid;
+            place-items: center;
+            min-height: 220px;
+            padding: 2rem 0 1rem;
+        }
+
+        .loading-card {
+            display: grid;
+            justify-items: center;
+            gap: 0.9rem;
+            padding: 1.7rem 2rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            box-shadow: 0 20px 36px rgba(15, 23, 42, 0.08);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 4px solid rgba(123, 58, 237, 0.16);
+            border-top-color: var(--primary);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .search-container { flex-direction: column; }
+            .search-btn { width: 100%; }
+            .search-input-wrap .voice-btn { width: 52px; min-height: 52px; }
+            .results-grid { grid-template-columns: 1fr; }
+            .filters { grid-template-columns: 1fr; }
+            .navbar-actions { gap: 0.5rem; }
+            .nav-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+            .modal-content { width: 95%; margin: 20% auto; }
+            .assistant-header { flex-direction: column; align-items: flex-start; }
+            .hero { padding-top: 3.6rem; }
+            .container, .filters, .action-buttons { padding-left: 1rem; padding-right: 1rem; }
+            .assistant-panel {
+                right: 1rem;
+                left: 1rem;
+                bottom: 5.2rem;
+                width: auto;
+                height: min(70vh, 540px);
+            }
+            .assistant-fab {
+                right: 1rem;
+                bottom: 1rem;
+            }
+            .assistant-fab::after {
+                display: none;
+            }
+            .paper-stats {
+                grid-template-columns: 1fr;
+            }
+            .assistant-message {
+                gap: 0.45rem;
+            }
+            .assistant-message-content {
+                max-width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-content">
+        <div class="navbar-brand" onclick="goToPage('search')">
+            <i class="fas fa-brain"></i> AI-Research Hub
+        </div>
+        <div class="navbar-actions">
+            <button class="nav-btn active" id="searchNavBtn" onclick="goToPage('search')">
+                <i class="fas fa-search"></i> Search
+            </button>
+            <button class="nav-btn" id="readingNavBtn" onclick="goToPage('reading')">
+                <i class="fas fa-book"></i> Reading
+            </button>
+            <button class="nav-btn" id="collectionsNavBtn" onclick="goToPage('collections')">
+                <i class="fas fa-folder"></i> Collections
+            </button>
+            <button class="nav-btn" id="savedNavBtn" onclick="goToPage('saved')">
+                <i class="fas fa-bookmark"></i> Saved <span class="badge-counter" id="savedCount">0</span>
+            </button>
+            <button class="nav-btn" id="statsNavBtn" onclick="goToPage('stats')">
+                <i class="fas fa-chart-bar"></i> Stats
+            </button>
+            <button class="theme-toggle" onclick="toggleDarkMode()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- SEARCH PAGE -->
+<div class="page active" id="searchPage">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="native-emoji">🧠</span>Discover Research Papers</h1>
+            <p>Universal Research Paper Finder • Search ANY topic from multiple academic sources</p>
+            
+            <div class="search-container">
+                <div class="search-input-wrap">
+                <input type="text" id="searchInput" placeholder="🔍 Search: machine learning, water pollution, politics..." onkeypress="if(event.key==='Enter') searchPapers()" onfocus="showSearchHistory()">
+                <button class="voice-btn" id="voiceSearchBtn" type="button" onclick="toggleVoiceSearch()" title="Voice search">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                </div>
+                <button class="search-btn" onclick="searchPapers()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <div class="search-history" id="searchHistory"></div>
+            </div>
+            <div class="voice-status" id="voiceStatus">Tap the mic and speak your topic.</div>
+        </div>
+    </section>
+
+    <div class="filters">
+        <div class="filter-group">
+            <label><span class="native-emoji">📅</span>Year</label>
+            <input type="number" id="startYear" min="1990" max="2026" value="2020">
+        </div>
+        <div class="filter-group">
+            <label><span class="native-emoji">📊</span>Sort</label>
+            <select id="sortBy">
+                <option value="relevance">Relevance</option>
+                <option value="recent">Recent</option>
+                <option value="oldest">Oldest</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label><span class="native-emoji">🏛️</span>Source</label>
+            <select id="sourceFilter">
+                <option value="all">All</option>
+                <option value="arXiv">arXiv</option>
+                <option value="CrossRef">CrossRef</option>
+                <option value="PubMed">PubMed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="btn-primary" onclick="clearAllFilters()">
+            <i class="fas fa-redo"></i> Clear
+        </button>
+        <button class="btn-secondary" onclick="exportPDF()">
+            <i class="fas fa-file-pdf"></i> Export PDF
+        </button>
+    </div>
+
+    <div class="container">
+        <section class="assistant-panel" id="assistantPanel">
+            <div class="assistant-shell">
+                <div class="assistant-header">
+                    <div>
+                        <span class="assistant-kicker">Research Copilot</span>
+                        <h2>Chatbot Assistant</h2>
+                        <div class="assistant-subtitle">Ask for summaries, top picks, or better search ideas.</div>
+                    </div>
+                    <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+                        <button class="assistant-refresh" type="button" onclick="resetAssistant()" title="Reset chat">
+                            <i class="fas fa-rotate-right"></i>
+                        </button>
+                        <button class="assistant-refresh" type="button" onclick="toggleAssistantPanel(false)" title="Close chat">
+                            <i class="fas fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="assistant-messages" id="assistantMessages"></div>
+                <div class="assistant-chip-row" id="assistantQuickActions"></div>
+                <div class="assistant-compose">
+                    <div class="assistant-input-wrap">
+                        <textarea id="assistantInput" rows="1" placeholder="Ask something about these papers..." onkeydown="handleAssistantKeydown(event)" oninput="autoResizeAssistantInput(this)"></textarea>
+                        <button class="search-btn assistant-send-btn" type="button" onclick="sendAssistantMessage()" title="Send message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="results"></div>
+    </div>
+</div>
+
+<!-- READING LIST PAGE -->
+<div class="page" id="readingPage">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="native-emoji">📚</span>Reading List</h1>
+            <p>Track your reading progress</p>
+        </div>
+    </section>
+    <div class="container">
+        <div id="readingListContent"></div>
+    </div>
+</div>
+
+<!-- COLLECTIONS PAGE -->
+<div class="page" id="collectionsPage">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="native-emoji">📁</span>Collections</h1>
+            <p>Organize papers into custom folders</p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="action-buttons">
+            <button class="btn-primary" onclick="showCreateCollectionModal()">
+                <i class="fas fa-plus"></i> New
+            </button>
+        </div>
+        <div id="collectionsContent"></div>
+    </div>
+</div>
+
+<!-- SAVED PAPERS PAGE -->
+<div class="page" id="savedPage">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="native-emoji">💾</span>Saved Papers</h1>
+            <p>Your bookmarked papers</p>
+        </div>
+    </section>
+    <div class="container">
+        <div id="savedContent"></div>
+    </div>
+</div>
+
+<!-- STATISTICS PAGE -->
+<div class="page" id="statsPage">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="native-emoji">📊</span>Statistics</h1>
+            <p>Your research activity</p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="stats-grid" id="statsGrid"></div>
+    </div>
+</div>
+
+<!-- PAPER DETAILS MODAL -->
+<div class="modal" id="paperModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="modalBody"></div>
+        <div class="modal-actions" id="modalActions"></div>
+    </div>
+</div>
+
+<!-- CREATE COLLECTION MODAL -->
+<div class="modal" id="collectionModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeCollectionModal()">&times;</span>
+        <h2 class="modal-title">New Collection</h2>
+        <input type="text" id="collectionName" class="input-field" placeholder="Name...">
+        <textarea id="collectionDesc" class="input-field" rows="3" placeholder="Description..."></textarea>
+        <div class="modal-actions">
+            <button class="btn-primary" onclick="createCollection()">Create</button>
+            <button class="btn-secondary" onclick="closeCollectionModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Universal Research Paper Finder | All Features Enabled | Made with <span class="native-emoji">❤️</span></p>
+</footer>
+
+<button class="assistant-fab" id="assistantFab" type="button" data-label="Open chatbot" onclick="toggleAssistantPanel()">
+    <i class="fas fa-comments"></i>
+    <span class="assistant-badge"></span>
+</button>
+
+<script>
+const FAVORITES_KEY = 'research_paper_favorites';
+const THEME_KEY = 'dark_mode_enabled';
+const SEARCH_HISTORY_KEY = 'search_history';
+const READING_LIST_KEY = 'reading_list';
+const COLLECTIONS_KEY = 'collections';
+const STATS_KEY = 'statistics';
+
+let allResults = [];
+let currentPaper = null;
+let recognition = null;
+let isListening = false;
+let assistantOpen = false;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+// PAGE NAVIGATION
+function goToPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page + 'Page').classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(page + 'NavBtn').classList.add('active');
+    if (page === 'saved') renderSavedPapers();
+    if (page === 'collections') renderCollections();
+    if (page === 'reading') renderReadingList();
+    if (page === 'stats') renderStats();
+}
+
+// THEME
+function toggleDarkMode() {
+    const html = document.documentElement;
+    html.classList.toggle('dark-mode');
+    const isDark = html.classList.contains('dark-mode');
+    localStorage.setItem(THEME_KEY, isDark);
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const toggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+    toggle.innerHTML = html.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
+
+function toggleAssistantPanel(forceState) {
+    const panel = document.getElementById('assistantPanel');
+    const fab = document.getElementById('assistantFab');
+    assistantOpen = typeof forceState === 'boolean' ? forceState : !assistantOpen;
+    panel.classList.toggle('open', assistantOpen);
+    fab.classList.toggle('active', assistantOpen);
+    fab.setAttribute('data-label', assistantOpen ? 'Close chatbot' : 'Open chatbot');
+    if (assistantOpen) {
+        document.getElementById('assistantInput').focus();
+    }
+}
+
+window.addEventListener('load', () => {
+    if (localStorage.getItem(THEME_KEY) === 'true') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    updateThemeIcon();
+    updateSavedCount();
+    initializeVoiceSearch();
+    resetAssistant();
+    toggleAssistantPanel(false);
+});
+
+function initializeVoiceSearch() {
+    const status = document.getElementById('voiceStatus');
+    const button = document.getElementById('voiceSearchBtn');
+
+    if (!SpeechRecognition) {
+        status.textContent = 'Voice search is not supported in this browser.';
+        button.disabled = true;
+        button.style.opacity = '0.6';
+        button.style.cursor = 'not-allowed';
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+        isListening = true;
+        button.classList.add('listening');
+        status.textContent = 'Listening... speak your research topic now.';
+    };
+
+    recognition.onresult = event => {
+        const transcript = event.results[0][0].transcript.trim();
+        document.getElementById('searchInput').value = transcript;
+        status.textContent = `Heard: "${transcript}"`;
+        searchPapers();
+    };
+
+    recognition.onerror = event => {
+        isListening = false;
+        button.classList.remove('listening');
+        status.textContent = event.error === 'not-allowed'
+            ? 'Microphone permission blocked. Please allow mic access and try again.'
+            : 'Voice search could not capture audio. Please try again.';
+    };
+
+    recognition.onend = () => {
+        isListening = false;
+        button.classList.remove('listening');
+    };
+}
+
+function toggleVoiceSearch() {
+    if (!recognition) {
+        return;
+    }
+
+    if (isListening) {
+        recognition.stop();
+        return;
+    }
+
+    recognition.start();
+}
+
+function resetAssistant() {
+    const messages = document.getElementById('assistantMessages');
+    messages.innerHTML = '';
+    appendAssistantMessage('bot', 'Assistant ready. Ask me to summarize results, suggest a better query, recommend papers, or focus on recent work.');
+    renderAssistantQuickActions([
+        'summarize these results',
+        'show top 3 papers',
+        'suggest a better query'
+    ]);
+    document.getElementById('assistantInput').value = '';
+    autoResizeAssistantInput(document.getElementById('assistantInput'));
+}
+
+function appendAssistantMessage(role, text) {
+    const messages = document.getElementById('assistantMessages');
+    const item = document.createElement('div');
+    item.className = `assistant-message ${role}`;
+    const label = role === 'user' ? 'You' : 'Assistant';
+    const avatar = role === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+    item.innerHTML = `
+        <div class="assistant-avatar">${avatar}</div>
+        <div class="assistant-message-content">
+            <div class="assistant-message-meta">${label}</div>
+            <div class="assistant-message-bubble">${escapeHtml(text)}</div>
+        </div>
+    `;
+    messages.appendChild(item);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function setAssistantLoading(isLoading) {
+    const messages = document.getElementById('assistantMessages');
+    const existing = document.getElementById('assistantTyping');
+    if (isLoading) {
+        if (existing) {
+            return;
+        }
+        const item = document.createElement('div');
+        item.className = 'assistant-message bot typing';
+        item.id = 'assistantTyping';
+        item.innerHTML = `
+            <div class="assistant-avatar"><i class="fas fa-robot"></i></div>
+            <div class="assistant-message-content">
+                <div class="assistant-message-meta">Assistant</div>
+                <div class="assistant-message-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="assistant-typing-text">Bot is typing...</span>
+                </div>
+            </div>
+        `;
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+        return;
+    }
+    if (existing) {
+        existing.remove();
+    }
+}
+
+function renderAssistantQuickActions(actions = []) {
+    const wrap = document.getElementById('assistantQuickActions');
+    wrap.innerHTML = '';
+    actions.forEach(action => {
+        const btn = document.createElement('button');
+        btn.className = 'assistant-chip';
+        btn.type = 'button';
+        btn.textContent = action;
+        btn.onclick = () => {
+            document.getElementById('assistantInput').value = action;
+            sendAssistantMessage(action);
+        };
+        wrap.appendChild(btn);
+    });
+}
+
+function handleAssistantKeydown(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendAssistantMessage();
+    }
+}
+
+function autoResizeAssistantInput(element) {
+    element.style.height = '56px';
+    element.style.height = `${Math.min(element.scrollHeight, 120)}px`;
+}
+
+function sendAssistantMessage(presetMessage) {
+    const input = document.getElementById('assistantInput');
+    const message = (presetMessage || input.value).trim();
+    if (!message) {
+        return;
+    }
+
+    toggleAssistantPanel(true);
+    appendAssistantMessage('user', message);
+    input.value = '';
+    autoResizeAssistantInput(input);
+    setAssistantLoading(true);
+
+    fetch('/research-paper-finder/api/papers/assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            message,
+            currentQuery: document.getElementById('searchInput').value.trim(),
+            currentResults: allResults.slice(0, 8)
+        })
+    })
+        .then(res => res.json())
+        .then(data => {
+            setAssistantLoading(false);
+            appendAssistantMessage('bot', data.reply || 'I could not prepare a response.');
+            renderAssistantQuickActions(data.followUps || []);
+            if (data.suggestedQuery && !document.getElementById('searchInput').value.trim()) {
+                document.getElementById('searchInput').value = data.suggestedQuery;
+            }
+        })
+        .catch(() => {
+            setAssistantLoading(false);
+            appendAssistantMessage('bot', 'Assistant is temporarily unavailable. Please try again.');
+        });
+}
+
+// SEARCH
+function searchPapers() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (query.length < 2) {
+        alert('Enter at least 2 characters');
+        return;
+    }
+    
+    // DEBUG: Log query
+    console.log('🔍 Searching:', query);
+    
+    addToSearchHistory(query);
+    updateStats('searched');
+    document.getElementById('results').innerHTML = `
+        <div class="results-loading">
+            <div class="loading-card">
+                <div class="loading-spinner"></div>
+                <strong>Searching papers...</strong>
+                <p>Fetching results from academic sources.</p>
+            </div>
+        </div>
+    `;
+    
+    // RESET FILTERS for reliable testing
+    document.getElementById('startYear').value = '2010';
+    document.getElementById('sourceFilter').value = 'all';
+    document.getElementById('sortBy').value = 'relevance';
+    
+    fetch(`/research-paper-finder/api/papers/search?query=${encodeURIComponent(query)}&limit=30`)
+        .then(res => {
+            console.log('📡 Response status:', res.status);
+            return res.json();
+        })
+        .then(data => {
+            // DEBUG: Full response
+            console.log('📄 API Response:', data);
+            console.log('📊 Raw papers count:', data.papers ? data.papers.length : 0);
+            
+            // Apply filters (but show warning if hiding results)
+            const startYear = parseInt(document.getElementById('startYear').value);
+            const source = document.getElementById('sourceFilter').value;
+            
+            const rawCount = data.papers ? data.papers.length : 0;
+            allResults = (data.papers || []).filter(p => {
+                const yearMatch = p.year === 0 || p.year >= startYear;
+                const sourceMatch = source === 'all' || (p.venue && p.venue.includes(source));
+                return yearMatch && sourceMatch;
+            });
+            
+            console.log('🔧 Filtered papers:', allResults.length, 'from raw', rawCount);
+            
+            sortResults();
+            renderResults(rawCount, data.query);
+            toggleAssistantPanel(true);
+            appendAssistantMessage('bot', `Search ready for "${data.query}". I found ${allResults.length} visible papers. Ask me for a summary, top picks, or a better query.`);
+            renderAssistantQuickActions([
+                'summarize these results',
+                'show top 3 papers',
+                'show recent papers'
+            ]);
+        })
+        .catch(err => {
+            console.error('❌ Search error:', err);
+            document.getElementById('results').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-card">
+                        <i class="fas fa-wifi"></i>
+                        <h2>Search Failed</h2>
+                        <p>We could not load papers right now. Please try again in a moment.</p>
+                    </div>
+                </div>
+            `;
+            alert('Search failed: ' + err.message);
+        });
+}
+
+function sortResults() {
+    const sortBy = document.getElementById('sortBy').value;
+    if (sortBy === 'recent') allResults.sort((a, b) => b.year - a.year);
+    else if (sortBy === 'oldest') allResults.sort((a, b) => a.year - b.year);
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
+
+function formatAuthors(authors, limit = 3) {
+    if (!authors || authors.length === 0) return "Unknown";
+
+    // handle both formats
+    let names = authors.map(a => {
+        if (typeof a === "string") return a;
+        return a.name || "Unknown";
+    });
+
+    if (names.length > limit) {
+        return names.slice(0, limit).join(", ") + " et al.";
+    }
+
+    return names.join(", ");
+}
+
+function renderResults(rawCount = 0, query = '') {
+    if (allResults.length === 0) {
+        let message = '';
+        if (rawCount > 0) {
+            message = `
+                <div class="empty-state">
+                    <div class="empty-state-card">
+                        <i class="fas fa-filter"></i>
+                        <h2>Filters Hiding Results</h2>
+                        <p>Found <strong>${rawCount}</strong> papers for "${escapeHtml(query)}" but current filters hide them all.</p>
+                        <button class="btn-primary" onclick="clearAllFilters()" style="margin-top: 1rem;">
+                            <i class="fas fa-redo"></i> Reset Filters & Show All
+                        </button>
+                        <details style="margin-top: 1rem; text-align: left;">
+                            <summary>Debug Info (click to expand)</summary>
+                            <pre style="background: var(--light-bg); padding: 1rem; border-radius: 8px; font-size: 0.8rem;">Raw: ${rawCount} | Filtered: ${allResults.length}</pre>
+                        </details>
+                    </div>
+                </div>
+            `;
+        } else {
+            message = `
+                <div class="empty-state">
+                    <div class="empty-state-card">
+                        <i class="fas fa-search"></i>
+                        <h2>No Results Found</h2>
+                        <p>We could not find papers for "${escapeHtml(query)}". Try one of these:</p>
+                        <ul style="text-align: left; max-width: 400px; margin: 1rem auto;">
+                            <li>Use broader keywords like "AI" or "climate change"</li>
+                            <li>Remove very specific version numbers or jargon</li>
+                            <li>Try a fresh query with a different source focus</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+        document.getElementById('results').innerHTML = message;
+        return;
+    }
+
+    let html = '<div class="results-grid">';
+
+    allResults.forEach((p, i) => {
+        const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+        const saved = !!fav[p.paperId];
+
+        const title = p.title || 'Untitled Paper';
+        const authorsText = formatAuthors(p.authors, 3);
+        const year = p.year || 'N/A';
+        const venue = p.venue || p.journal?.name || 'General';
+        const abstractText = p.abstractText || p.abstract || 'No abstract available';
+        const citationCount = Number.isFinite(p.citationCount) ? p.citationCount : 0;
+        const paperUrl = p.url || '#';
+        const safePaperId = (p.paperId || `paper-${i}`).replace(/'/g, "\\'");
+        const safeTitle = title.replace(/'/g, "\\'");
+        const safeAbstract = abstractText.replace(/'/g, "\\'");
+
+        html += `
+            <div class="paper-card" style="animation-delay: ${i * 0.05}s">
+                <div class="paper-card-top">
+                    <h3 class="paper-title">${escapeHtml(title)}</h3>
+                    <div class="paper-rank">#${i + 1}</div>
+                </div>
+                <p class="paper-authors"><span class="native-emoji">👥</span>${escapeHtml(authorsText)}</p>
+
+                <div class="paper-meta">
+                    <span class="badge"><span class="native-emoji">📅</span>${year}</span>
+                    <span class="badge venue"><span class="native-emoji">🏛️</span>${venue}</span>
+                </div>
+
+                <div class="paper-stats">
+                    <div class="paper-stat">
+                        <span class="paper-stat-label">Year</span>
+                        <span class="paper-stat-value">${year}</span>
+                    </div>
+                    <div class="paper-stat">
+                        <span class="paper-stat-label">Citations</span>
+                        <span class="paper-stat-value">${citationCount > 0 ? citationCount : 'New'}</span>
+                    </div>
+                    <div class="paper-stat">
+                        <span class="paper-stat-label">Source</span>
+                        <span class="paper-stat-value">${escapeHtml(venue).slice(0, 14)}</span>
+                    </div>
+                </div>
+
+                <div class="paper-section-label">Abstract Snapshot</div>
+                <p class="paper-abstract">${escapeHtml(abstractText)}</p>
+
+                <div class="paper-actions">
+                    <a href="${paperUrl}" target="_blank" rel="noopener noreferrer" class="action-btn read-btn" onclick="updateStats('viewed')">
+                        <i class="fas fa-external-link-alt"></i> Read
+                    </a>
+
+                    <button class="action-btn save-btn ${saved ? 'saved' : ''}" onclick="toggleFav(this, '${safePaperId}', '${safeTitle}')">
+                        <i class="fas fa-${saved ? 'star' : 'bookmark'}"></i> ${saved ? 'Saved' : 'Save'}
+                    </button>
+
+                    <button class="action-btn details-btn" onclick="showPaperDetails('${safePaperId}', '${safeTitle}', '${safeAbstract}')">
+                        <i class="fas fa-info-circle"></i> Details
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    document.getElementById('results').innerHTML = html;
+}
+
+// SEARCH HISTORY
+function addToSearchHistory(q) {
+    let h = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    h = [q, ...h.filter(x => x !== q)].slice(0, 10);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(h));
+}
+
+function showSearchHistory() {
+    const h = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    const div = document.getElementById('searchHistory');
+    if (h.length === 0) { div.classList.remove('active'); return; }
+    div.innerHTML = h.map(item => `
+        <div class="history-item">
+            <div class="history-item-text" onclick="document.getElementById('searchInput').value='${item}'; searchPapers();">
+                <i class="fas fa-history"></i> ${item}
+            </div>
+            <button class="history-delete-btn" onclick="delSearchHistory('${item}'); event.stopPropagation();">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `).join('');
+    div.classList.add('active');
+}
+
+function delSearchHistory(item) {
+    let h = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    h = h.filter(x => x !== item);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(h));
+    showSearchHistory();
+}
+
+document.addEventListener('click', e => {
+    if (!e.target.closest('.search-container')) document.getElementById('searchHistory').classList.remove('active');
+    if (assistantOpen && !e.target.closest('#assistantPanel') && !e.target.closest('#assistantFab')) {
+        toggleAssistantPanel(false);
+    }
+});
+
+// FAVORITES
+function toggleFav(btn, id, title) {
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+
+    if (fav[id]) {
+        delete fav[id];
+        btn.classList.remove('saved');
+        btn.innerHTML = '<i class="fas fa-bookmark"></i> Save';
+    } else {
+        fav[id] = {
+            paperId: id,
+            title: title
+        };
+        btn.classList.add('saved');
+        btn.innerHTML = '<i class="fas fa-star"></i> Saved';
+    }
+
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(fav));
+    updateSavedCount();
+}
+function updateSavedCount() {
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    document.getElementById('savedCount').textContent = Object.keys(fav).length;
+}
+
+function renderSavedPapers() {
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    const ids = Object.keys(fav);
+    if (ids.length === 0) {
+        document.getElementById('savedContent').innerHTML = '<div class="empty-state"><i class="fas fa-bookmark"></i><h2>No Saved</h2></div>';
+        return;
+    }
+    let html = '<div class="results-grid">';
+    ids.forEach((id, i) => {
+        html += `
+            <div class="paper-card" style="animation-delay: ${i * 0.05}s">
+                <h3 class="paper-title">${escapeHtml(fav[id].title || 'Untitled Paper')}</h3>
+                <div class="paper-meta"><span class="badge"><i class="fas fa-check"></i> Saved</span></div>
+                <div class="paper-actions">
+                    <button class="action-btn save-btn saved" onclick="removeFav(this, '${id}')" style="flex: 1;">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    document.getElementById('savedContent').innerHTML = html;
+}
+
+function removeFav(btn, id) {
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    delete fav[id];
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(fav));
+    updateSavedCount();
+    renderSavedPapers();
+}
+
+// MODAL
+function showPaperDetails(id, title, abstract) {
+    currentPaper = { paperId: id, title, abstract };
+    const body = document.getElementById('modalBody');
+    body.innerHTML = `
+        <h2 class="modal-title">${escapeHtml(title)}</h2>
+        <div class="modal-section">
+            <div class="modal-section-title"><span class="native-emoji">📄</span>Abstract</div>
+            <div class="modal-text">${abstract || 'No abstract'}</div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-title"><span class="native-emoji">📌</span>ID</div>
+            <div class="modal-text">${escapeHtml(id)}</div>
+        </div>
+    `;
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    const saved = !!fav[id];
+    const actions = document.getElementById('modalActions');
+    actions.innerHTML = `
+        <button class="btn-primary" onclick="addToReadingList()" style="flex: 1;"><i class="fas fa-plus"></i> Add</button>
+        <button class="btn-secondary" onclick="toggleFavFromModal()" style="flex: 1; background: linear-gradient(135deg, ${saved ? 'var(--success), #059669' : 'var(--accent), #F59E0B'});">
+            <i class="fas fa-${saved ? 'check' : 'bookmark'}"></i>
+        </button>
+        <button class="btn-secondary" onclick="closeModal()" style="flex: 1;">Close</button>
+    `;
+    document.getElementById('paperModal').classList.add('active');
+}
+
+function toggleFavFromModal() {
+    if (!currentPaper) return;
+
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+
+    if (fav[currentPaper.paperId]) {
+        delete fav[currentPaper.paperId];
+    } else {
+        fav[currentPaper.paperId] = {
+            paperId: currentPaper.paperId,
+            title: currentPaper.title
+        };
+    }
+
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(fav));
+    updateSavedCount();
+
+    showPaperDetails(
+        currentPaper.paperId,
+        currentPaper.title,
+        currentPaper.abstract
+    );
+}
+function closeModal() {
+    document.getElementById('paperModal').classList.remove('active');
+}
+
+function closeCollectionModal() {
+    document.getElementById('collectionModal').classList.remove('active');
+    document.getElementById('collectionName').value = '';
+    document.getElementById('collectionDesc').value = '';
+}
+
+// READING LIST
+function addToReadingList() {
+    if (!currentPaper) return;
+    let rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    if (rl.find(r => r.paperId === currentPaper.paperId)) {
+        alert('Already in list!');
+        return;
+    }
+    rl.push({
+        paperId: currentPaper.paperId,
+        title: currentPaper.title,
+        status: 'to-read',
+        addedDate: new Date().toLocaleDateString(),
+        readingProgress: 0
+    });
+    localStorage.setItem(READING_LIST_KEY, JSON.stringify(rl));
+    alert('Added!');
+    closeModal();
+}
+
+function renderReadingList() {
+    let rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    if (rl.length === 0) {
+        document.getElementById('readingListContent').innerHTML = '<div class="empty-state"><i class="fas fa-book"></i><h2>Empty</h2></div>';
+        return;
+    }
+    let html = '';
+    const statuses = ['to-read', 'reading', 'completed'];
+    const labels = { 'to-read': '📋 To Read', 'reading': '👀 Reading', 'completed': '✅ Done' };
+    const classes = { 'to-read': 'status-to-read', 'reading': 'status-reading', 'completed': 'status-completed' };
+    statuses.forEach(s => {
+        const papers = rl.filter(r => r.status === s);
+        if (papers.length === 0) return;
+        html += `<h3 style="margin-top: 2rem; color: var(--primary);">${labels[s]}</h3>`;
+        papers.forEach(p => {
+            html += `
+                <div class="reading-item">
+                    <h4>${p.title}</h4>
+                    <span class="reading-status ${classes[s]}">${labels[s]}</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: ${p.readingProgress}%"></div></div>
+                    <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <select onchange="updateReadingStatus('${p.paperId}', this.value)" style="padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                            <option value="to-read" ${s === 'to-read' ? 'selected' : ''}>To Read</option>
+                            <option value="reading" ${s === 'reading' ? 'selected' : ''}>Reading</option>
+                            <option value="completed" ${s === 'completed' ? 'selected' : ''}>Done</option>
+                        </select>
+                        <input type="range" min="0" max="100" value="${p.readingProgress}" onchange="updateReadingProgress('${p.paperId}', this.value)" style="flex: 1; min-width: 150px;">
+                        <button onclick="removeFromReadingList('${p.paperId}')" style="padding: 0.5rem 1rem; background: var(--danger); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Remove</button>
+                    </div>
+                </div>
+            `;
+        });
+    });
+    document.getElementById('readingListContent').innerHTML = html;
+}
+
+function updateReadingStatus(id, status) {
+    let rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    const p = rl.find(r => r.paperId === id);
+    if (p) { p.status = status; localStorage.setItem(READING_LIST_KEY, JSON.stringify(rl)); renderReadingList(); }
+}
+
+function updateReadingProgress(id, progress) {
+    let rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    const p = rl.find(r => r.paperId === id);
+    if (p) { p.readingProgress = parseInt(progress); localStorage.setItem(READING_LIST_KEY, JSON.stringify(rl)); }
+}
+
+function removeFromReadingList(id) {
+    let rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    rl = rl.filter(r => r.paperId !== id);
+    localStorage.setItem(READING_LIST_KEY, JSON.stringify(rl));
+    renderReadingList();
+}
+
+// COLLECTIONS
+function showCreateCollectionModal() {
+    document.getElementById('collectionModal').classList.add('active');
+}
+
+function createCollection() {
+    const name = document.getElementById('collectionName').value.trim();
+    const desc = document.getElementById('collectionDesc').value.trim();
+    if (!name) { alert('Enter name'); return; }
+    let col = JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || '{}');
+    const id = Date.now().toString();
+    col[id] = { name, desc, papers: [], createdDate: new Date().toLocaleDateString() };
+    localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(col));
+    closeCollectionModal();
+    renderCollections();
+    alert('Created!');
+}
+
+function renderCollections() {
+    let col = JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || '{}');
+    const ids = Object.keys(col);
+    if (ids.length === 0) {
+        document.getElementById('collectionsContent').innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><h2>Empty</h2></div>';
+        return;
+    }
+    let html = '<div class="collection-list">';
+    ids.forEach(id => {
+        const c = col[id];
+        html += `
+            <div class="collection-item">
+                <i class="fas fa-folder" style="font-size: 2rem; color: var(--primary);"></i>
+                <h3>${c.name}</h3>
+                <p style="font-size: 0.9rem; color: var(--text-light); margin: 0.5rem 0;">${c.desc}</p>
+                <div class="collection-count">${c.papers.length}</div>
+                <button onclick="deleteCollection('${id}');" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; background: var(--danger); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">Delete</button>
+            </div>
+        `;
+    });
+    html += '</div>';
+    document.getElementById('collectionsContent').innerHTML = html;
+}
+
+function deleteCollection(id) {
+    if (!confirm('Delete?')) return;
+    let col = JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || '{}');
+    delete col[id];
+    localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(col));
+    renderCollections();
+}
+
+// STATS
+function updateStats(action) {
+    let s = JSON.parse(localStorage.getItem(STATS_KEY) || '{"searched": 0, "saved": 0, "viewed": 0}');
+    s[action] = (s[action] || 0) + 1;
+    localStorage.setItem(STATS_KEY, JSON.stringify(s));
+}
+
+function renderStats() {
+    const s = JSON.parse(localStorage.getItem(STATS_KEY) || '{"searched": 0, "saved": 0, "viewed": 0}');
+    const fav = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    const rl = JSON.parse(localStorage.getItem(READING_LIST_KEY) || '[]');
+    const col = JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || '{}');
+    document.getElementById('statsGrid').innerHTML = `
+        <div class="stat-card"><i class="fas fa-search" style="font-size: 2rem;"></i><div class="stat-label">Searches</div><div class="stat-number">${s.searched}</div></div>
+        <div class="stat-card"><i class="fas fa-bookmark" style="font-size: 2rem;"></i><div class="stat-label">Saved</div><div class="stat-number">${Object.keys(fav).length}</div></div>
+        <div class="stat-card"><i class="fas fa-book" style="font-size: 2rem;"></i><div class="stat-label">Reading</div><div class="stat-number">${rl.length}</div></div>
+        <div class="stat-card"><i class="fas fa-folder" style="font-size: 2rem;"></i><div class="stat-label">Collections</div><div class="stat-number">${Object.keys(col).length}</div></div>
+        <div class="stat-card"><i class="fas fa-eye" style="font-size: 2rem;"></i><div class="stat-label">Viewed</div><div class="stat-number">${s.viewed || 0}</div></div>
+    `;
+}
+
+// EXPORT
+function clearAllFilters() {
+    document.getElementById('startYear').value = '2020';
+    document.getElementById('sortBy').value = 'relevance';
+    document.getElementById('sourceFilter').value = 'all';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('searchInput').focus();
+}
+
+function exportPDF() {
+    if (allResults.length === 0) {
+        alert('No papers');
+        return;
+    }
+
+    let content = '<h1>Papers Export</h1>';
+    content += `<p>Date: ${new Date().toLocaleDateString()}</p><hr>`;
+
+    allResults.forEach((p, i) => {
+        content += `<h3>${i + 1}. ${p.title || 'Untitled Paper'}</h3>`;
+        content += `<p><strong>Authors:</strong> ${formatAuthors(p.authors)}</p>`;
+        content += `<p><strong>Year:</strong> ${p.year || 'N/A'}</p>`;
+        content += `<p><strong>Venue:</strong> ${p.venue || p.journal?.name || 'General'}</p>`;
+        content += `<p><strong>URL:</strong> <a href="${p.url || '#'}">${p.url || 'N/A'}</a></p>`;
+        content += `<p><strong>Abstract:</strong> ${p.abstractText || p.abstract || 'No abstract available'}</p><hr>`;
+    });
+
+    const el = document.createElement('div');
+    el.innerHTML = content;
+
+    const opt = {
+        margin: 10,
+        filename: 'papers_export.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+
+    html2pdf().set(opt).from(el).save();
+}
+</script>
+</body>
+</html>
+

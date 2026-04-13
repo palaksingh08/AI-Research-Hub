@@ -1,0 +1,219 @@
+2026-04-05T20:12:43.631+05:30  INFO 17172 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Starting ResearchPaperFinderApplication using Java 17.0.9 with PID 17172 (C:\STS\Project\researchpaperfinder\target\classes started by HP in C:\STS\Project\researchpaperfinder)
+2026-04-05T20:12:43.634+05:30 DEBUG 17172 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Running with Spring Boot v3.3.4, Spring v6.1.13
+2026-04-05T20:12:43.634+05:30  INFO 17172 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-04-05T20:12:44.769+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-04-05T20:12:44.790+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-05T20:12:44.790+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-04-05T20:12:44.845+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring embedded WebApplicationContext
+2026-04-05T20:12:44.846+05:30  INFO 17172 --- [AI Research Paper Finder] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1169 ms
+2026-04-05T20:12:44.944+05:30  INFO 17172 --- [AI Research Paper Finder] [main] com.project.service.PaperSearchService   : ✅ PaperSearchService initialized with arXiv API
+2026-04-05T20:12:44.996+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-05T20:12:45.273+05:30  INFO 17172 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/research-paper-finder'
+2026-04-05T20:12:45.287+05:30  INFO 17172 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Started ResearchPaperFinderApplication in 2.03 seconds (process running for 2.652)
+2026-04-05T20:13:01.177+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-2] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-05T20:13:01.178+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-05T20:13:01.178+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-04-05T20:13:35.993+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'machine learning' | Limit: 20
+2026-04-05T20:13:36.001+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'machine learning'
+2026-04-05T20:13:36.003+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:machine+learning&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:36.541+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:36.541+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:36.541+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:36.541+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ⚠️ No results for full query. Trying keywords...
+2026-04-05T20:13:36.544+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🔑 Extracted keywords: [machine, learning]
+2026-04-05T20:13:36.544+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'machine'
+2026-04-05T20:13:36.544+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:machine&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:36.823+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:36.832+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:36.832+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:36.832+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'learning'
+2026-04-05T20:13:36.832+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:learning&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:37.005+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:37.005+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:37.005+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:37.009+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Found 0 papers for 'machine learning'
+2026-04-05T20:13:37.009+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-3] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 0 papers in 1016ms
+2026-04-05T20:13:51.284+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'deep learning' | Limit: 20
+2026-04-05T20:13:51.286+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'deep learning'
+2026-04-05T20:13:51.287+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:deep+learning&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:51.574+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:51.580+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:51.580+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:51.580+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ⚠️ No results for full query. Trying keywords...
+2026-04-05T20:13:51.580+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🔑 Extracted keywords: [deep, learning]
+2026-04-05T20:13:51.582+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'deep'
+2026-04-05T20:13:51.582+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:deep&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:51.875+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:51.885+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:51.886+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:51.886+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'learning'
+2026-04-05T20:13:51.886+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🌐 arXiv API URL: http://export.arxiv.org/api/query?search_query=all:learning&start=0&max_results=20&sortBy=relevance&sortOrder=descending
+2026-04-05T20:13:52.088+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 📨 Response Status: 301 MOVED_PERMANENTLY
+2026-04-05T20:13:52.088+05:30  WARN 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ⚠️ Empty response
+2026-04-05T20:13:52.088+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ✅ Parsed 0 papers
+2026-04-05T20:13:52.088+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : ✅ Found 0 papers for 'deep learning'
+2026-04-05T20:13:52.091+05:30  INFO 17172 --- [AI Research Paper Finder] [http-nio-9090-exec-4] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 0 papers in 807ms
+2026-04-05T20:15:09.060+05:30  INFO 17172 --- [AI Research Paper Finder] [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-05T20:15:12.310+05:30  INFO 25932 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Starting ResearchPaperFinderApplication using Java 17.0.9 with PID 25932 (C:\STS\Project\researchpaperfinder\target\classes started by HP in C:\STS\Project\researchpaperfinder)
+2026-04-05T20:15:12.312+05:30 DEBUG 25932 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Running with Spring Boot v3.3.4, Spring v6.1.13
+2026-04-05T20:15:12.313+05:30  INFO 25932 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-04-05T20:15:13.213+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-04-05T20:15:13.224+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-05T20:15:13.225+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-04-05T20:15:13.271+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring embedded WebApplicationContext
+2026-04-05T20:15:13.271+05:30  INFO 25932 --- [AI Research Paper Finder] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 908 ms
+2026-04-05T20:15:13.348+05:30  INFO 25932 --- [AI Research Paper Finder] [main] com.project.service.PaperSearchService   : ✅ PaperSearchService initialized with arXiv API
+2026-04-05T20:15:13.391+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-05T20:15:13.614+05:30  INFO 25932 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/research-paper-finder'
+2026-04-05T20:15:13.623+05:30  INFO 25932 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Started ResearchPaperFinderApplication in 1.706 seconds (process running for 2.201)
+2026-04-05T20:15:37.019+05:30  INFO 25932 --- [AI Research Paper Finder] [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-05T20:15:39.756+05:30  INFO 24064 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Starting ResearchPaperFinderApplication using Java 17.0.9 with PID 24064 (C:\STS\Project\researchpaperfinder\target\classes started by HP in C:\STS\Project\researchpaperfinder)
+2026-04-05T20:15:39.757+05:30 DEBUG 24064 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Running with Spring Boot v3.3.4, Spring v6.1.13
+2026-04-05T20:15:39.758+05:30  INFO 24064 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-04-05T20:15:40.500+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-04-05T20:15:40.512+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-05T20:15:40.513+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-04-05T20:15:40.557+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring embedded WebApplicationContext
+2026-04-05T20:15:40.558+05:30  INFO 24064 --- [AI Research Paper Finder] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 754 ms
+2026-04-05T20:15:40.637+05:30  INFO 24064 --- [AI Research Paper Finder] [main] com.project.service.PaperSearchService   : ✅ PaperSearchService initialized with arXiv API
+2026-04-05T20:15:40.678+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-05T20:15:40.888+05:30  INFO 24064 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/research-paper-finder'
+2026-04-05T20:15:40.898+05:30  INFO 24064 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Started ResearchPaperFinderApplication in 1.507 seconds (process running for 1.965)
+2026-04-05T20:15:52.632+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-4] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-05T20:15:52.632+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-05T20:15:52.632+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-04-05T20:16:06.898+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'machine learning' | Limit: 20
+2026-04-05T20:16:06.905+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'machine learning'
+2026-04-05T20:16:06.907+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🌐 API URL: http://export.arxiv.org/api/query?search_query=all%3Amachine+learning&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:16:07.368+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 📨 Response Code: 301
+2026-04-05T20:16:07.368+05:30 ERROR 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : ❌ API returned status: 301
+2026-04-05T20:16:07.368+05:30  WARN 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : ⚠️ No results for full query. Trying keywords...
+2026-04-05T20:16:07.368+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🔑 Extracted 2 keywords: [machine, learning]
+2026-04-05T20:16:07.370+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'machine'
+2026-04-05T20:16:07.370+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🌐 API URL: http://export.arxiv.org/api/query?search_query=all%3Amachine&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:16:07.570+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 📨 Response Code: 301
+2026-04-05T20:16:07.570+05:30 ERROR 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : ❌ API returned status: 301
+2026-04-05T20:16:07.570+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🔑 Searching keyword: 'learning'
+2026-04-05T20:16:07.572+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 🌐 API URL: http://export.arxiv.org/api/query?search_query=all%3Alearning&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:16:07.780+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : 📨 Response Code: 301
+2026-04-05T20:16:07.780+05:30 ERROR 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : ❌ API returned status: 301
+2026-04-05T20:16:07.782+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] com.project.service.PaperSearchService   : ✅ Found 0 papers for 'machine learning'
+2026-04-05T20:16:07.782+05:30  INFO 24064 --- [AI Research Paper Finder] [http-nio-9090-exec-1] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 0 papers in 884ms
+2026-04-05T20:17:50.126+05:30  INFO 24064 --- [AI Research Paper Finder] [RMI TCP Connection(4)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-05T20:17:53.493+05:30  INFO 13460 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Starting ResearchPaperFinderApplication using Java 17.0.9 with PID 13460 (C:\STS\Project\researchpaperfinder\target\classes started by HP in C:\STS\Project\researchpaperfinder)
+2026-04-05T20:17:53.495+05:30 DEBUG 13460 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Running with Spring Boot v3.3.4, Spring v6.1.13
+2026-04-05T20:17:53.495+05:30  INFO 13460 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-04-05T20:17:54.358+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-04-05T20:17:54.393+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-05T20:17:54.393+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-04-05T20:17:54.449+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring embedded WebApplicationContext
+2026-04-05T20:17:54.449+05:30  INFO 13460 --- [AI Research Paper Finder] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 914 ms
+2026-04-05T20:17:54.525+05:30  INFO 13460 --- [AI Research Paper Finder] [main] com.project.service.PaperSearchService   : ✅ PaperSearchService initialized with arXiv API
+2026-04-05T20:17:54.579+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-05T20:17:54.878+05:30  INFO 13460 --- [AI Research Paper Finder] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/research-paper-finder'
+2026-04-05T20:17:54.888+05:30  INFO 13460 --- [AI Research Paper Finder] [main] c.p.ResearchPaperFinderApplication       : Started ResearchPaperFinderApplication in 1.771 seconds (process running for 2.303)
+2026-04-05T20:18:04.973+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-1] o.a.c.c.C.[.[.[/research-paper-finder]   : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-05T20:18:04.973+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-05T20:18:04.981+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2026-04-05T20:18:10.459+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'machine learning' | Limit: 20
+2026-04-05T20:18:10.464+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'machine learning'
+2026-04-05T20:18:10.466+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 🌐 API URL: https://export.arxiv.org/api/query?search_query=all%3Amachine+learning&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:18:12.823+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📨 Response Code: 200
+2026-04-05T20:18:12.940+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Got response (length: 50595)
+2026-04-05T20:18:12.947+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📄 Parsing response (length: 50595)...
+2026-04-05T20:18:12.956+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : 📊 Found 20 entries
+2026-04-05T20:18:12.962+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 1: ActionParty: Multi-Subject Action Binding in Generative Vide
+2026-04-05T20:18:12.966+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 2: Modulate-and-Map: Crossmodal Feature Mapping with Cross-View
+2026-04-05T20:18:12.970+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 3: Grounded Token Initialization for New Vocabulary in LMs for 
+2026-04-05T20:18:12.974+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 4: Beyond Referring Expressions: Scenario Comprehension Visual 
+2026-04-05T20:18:12.977+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 5: Batched Contextual Reinforcement: A Task-Scaling Law for Eff
+2026-04-05T20:18:12.980+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 6: Large-scale Codec Avatars: The Unreasonable Effectiveness of
+2026-04-05T20:18:12.982+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 7: No Single Best Model for Diversity: Learning a Router for Sa
+2026-04-05T20:18:12.984+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 8: Topological Effects in Neural Network Field Theory
+2026-04-05T20:18:12.986+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 9: go-$m$HC: Direct Parameterization of Manifold-Constrained Hy
+2026-04-05T20:18:12.986+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 10: PARD-SSM: Probabilistic Cyber-Attack Regime Detection via Va
+2026-04-05T20:18:12.989+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 11: Taming the Exponential: A Fast Softmax Surrogate for Integer
+2026-04-05T20:18:12.990+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 12: Unifying Group-Relative and Self-Distillation Policy Optimiz
+2026-04-05T20:18:12.992+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 13: CIVIC: Cooperative Immersion Via Intelligent Credit-sharing 
+2026-04-05T20:18:12.992+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 14: AlloyVAE: A generative model for complex probabilistic field
+2026-04-05T20:18:12.994+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 15: LLMs as Idiomatic Decompilers: Recovering High-Level Code fr
+2026-04-05T20:18:12.995+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 16: De Jure: Iterative LLM Self-Refinement for Structured Extrac
+2026-04-05T20:18:12.995+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 17: Selective State-Space Models for Koopman-based Data-driven D
+2026-04-05T20:18:12.995+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 18: Crystalite: A Lightweight Transformer for Efficient Crystal 
+2026-04-05T20:18:13.000+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 19: SKILL0: In-Context Agentic Reinforcement Learning for Skill 
+2026-04-05T20:18:13.000+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✓ Paper 20: Model-Based Reinforcement Learning for Control under Time-Va
+2026-04-05T20:18:13.000+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Successfully parsed 20 papers
+2026-04-05T20:18:13.000+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Parsed 20 papers
+2026-04-05T20:18:13.002+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] com.project.service.PaperSearchService   : ✅ Found 20 papers for 'machine learning'
+2026-04-05T20:18:13.002+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-3] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 20 papers in 2543ms
+2026-04-05T20:18:40.703+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'global warming' | Limit: 20
+2026-04-05T20:18:40.704+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'global warming'
+2026-04-05T20:18:40.705+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : 🌐 API URL: https://export.arxiv.org/api/query?search_query=all%3Aglobal+warming&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:18:41.888+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : 📨 Response Code: 200
+2026-04-05T20:18:42.001+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✅ Got response (length: 47396)
+2026-04-05T20:18:42.001+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : 📄 Parsing response (length: 47396)...
+2026-04-05T20:18:42.003+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : 📊 Found 20 entries
+2026-04-05T20:18:42.005+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 1: ActionParty: Multi-Subject Action Binding in Generative Vide
+2026-04-05T20:18:42.005+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 2: Steerable Visual Representations
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 3: Beyond Referring Expressions: Scenario Comprehension Visual 
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 4: Trapping and commutative Boolean networks
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 5: The Retraction Epidemic in Science Across Publishers, Fields
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 6: AdamFlow: Adam-based Wasserstein Gradient Flows for Surface 
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 7: A proposal for the safety and controllability requirements t
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 8: Dark Patterns in Indian Quick Commerce Apps: A Student Persp
+2026-04-05T20:18:42.007+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 9: A research roadmap for assessing the feasibility of warming 
+2026-04-05T20:18:42.013+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 10: Probabilistic AVL Trees (p-AVL): Relaxing Deterministic Bala
+2026-04-05T20:18:42.013+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 11: TRU: Targeted Reverse Update for Efficient Multimodal Recomm
+2026-04-05T20:18:42.013+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 12: Flux-equilibrated based a posteriori error analysis for an i
+2026-04-05T20:18:42.016+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 13: HyVGGT-VO: Tightly Coupled Hybrid Dense Visual Odometry with
+2026-04-05T20:18:42.016+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 14: Localized formation of quiescent big bang singularities
+2026-04-05T20:18:42.018+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 15: Constrained Quantum Optimization via Iterative Warm-Start XY
+2026-04-05T20:18:42.018+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 16: Mining Instance-Centric Vision-Language Contexts for Human-O
+2026-04-05T20:18:42.020+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 17: Diff-KD: Diffusion-based Knowledge Distillation for Collabor
+2026-04-05T20:18:42.020+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 18: Thermodynamic connectivity reveals functional specialization
+2026-04-05T20:18:42.022+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 19: High-threshold decoding of non-Pauli codes for 2D universali
+2026-04-05T20:18:42.022+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✓ Paper 20: Are VLMs Lost Between Sky and Space? LinkS$^2$Bench for UAV-
+2026-04-05T20:18:42.022+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✅ Successfully parsed 20 papers
+2026-04-05T20:18:42.022+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✅ Parsed 20 papers
+2026-04-05T20:18:42.024+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] com.project.service.PaperSearchService   : ✅ Found 20 papers for 'global warming'
+2026-04-05T20:18:42.024+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-2] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 20 papers in 1321ms
+2026-04-05T20:18:42.043+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-4] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'global warming' | Limit: 20
+2026-04-05T20:18:42.043+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'global warming'
+2026-04-05T20:18:42.043+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-4] com.project.service.PaperSearchService   : 💾 Cache HIT: 20 papers
+2026-04-05T20:18:42.043+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-4] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 20 papers in 0ms
+2026-04-05T20:19:16.810+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'cybersecurity' | Limit: 20
+2026-04-05T20:19:16.815+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'cybersecurity'
+2026-04-05T20:19:16.815+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : 🌐 API URL: https://export.arxiv.org/api/query?search_query=all%3Acybersecurity&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending
+2026-04-05T20:19:18.039+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : 📨 Response Code: 200
+2026-04-05T20:19:18.149+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✅ Got response (length: 49050)
+2026-04-05T20:19:18.149+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : 📄 Parsing response (length: 49050)...
+2026-04-05T20:19:18.149+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : 📊 Found 20 entries
+2026-04-05T20:19:18.156+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 1: RuleForge: Automated Generation and Validation for Web Vulne
+2026-04-05T20:19:18.156+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 2: Automated Generation of Cybersecurity Exercise Scenarios
+2026-04-05T20:19:18.156+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 3: Efficient DPF-based Error-Detecting Information-Theoretic Pr
+2026-04-05T20:19:18.156+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 4: Cybersecurity Risk Assessment for CubeSat Missions: Adapting
+2026-04-05T20:19:18.159+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 5: Design Principles for the Construction of a Benchmark Evalua
+2026-04-05T20:19:18.159+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 6: Multimodal Analytics of Cybersecurity Crisis Preparation Exe
+2026-04-05T20:19:18.159+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 7: Context-Aware Phishing Email Detection Using Machine Learnin
+2026-04-05T20:19:18.159+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 8: Red-MIRROR: Agentic LLM-based Autonomous Penetration Testing
+2026-04-05T20:19:18.162+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 9: Resource Allocation in Strategic Adversarial Interactions: C
+2026-04-05T20:19:18.164+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 10: AVDA: Autonomous Vibe Detection Authoring for Cybersecurity
+2026-04-05T20:19:18.164+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 11: Understanding AI Methods for Intrusion Detection and Cryptog
+2026-04-05T20:19:18.164+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 12: An Approach to Generate Attack Graphs with a Case Study on S
+2026-04-05T20:19:18.166+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 13: Policy-Guided Threat Hunting: An LLM enabled Framework with 
+2026-04-05T20:19:18.166+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 14: Human, AI, and Hybrid Ensembles for Detection of Adaptive, R
+2026-04-05T20:19:18.166+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 15: CSTS: A Canonical Security Telemetry Substrate for AI-Native
+2026-04-05T20:19:18.168+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 16: Targeted Adversarial Traffic Generation : Black-box Approach
+2026-04-05T20:19:18.168+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 17: RTS-ABAC: Real-Time Server-Aided Attribute-Based Authorizati
+2026-04-05T20:19:18.171+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 18: Explainable Threat Attribution for IoT Networks Using Condit
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 19: STRIATUM-CTF: A Protocol-Driven Agentic Framework for Genera
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✓ Paper 20: CTF as a Service: A reproducible and scalable infrastructure
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✅ Successfully parsed 20 papers
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✅ Parsed 20 papers
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] com.project.service.PaperSearchService   : ✅ Found 20 papers for 'cybersecurity'
+2026-04-05T20:19:18.172+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-5] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 20 papers in 1362ms
+2026-04-05T20:19:18.195+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-6] c.p.controller.PaperSearchController     : 🔍 [SEARCH] Query: 'cybersecurity' | Limit: 20
+2026-04-05T20:19:18.195+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-6] com.project.service.PaperSearchService   : 🔍 Searching arXiv for: 'cybersecurity'
+2026-04-05T20:19:18.195+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-6] com.project.service.PaperSearchService   : 💾 Cache HIT: 20 papers
+2026-04-05T20:19:18.195+05:30  INFO 13460 --- [AI Research Paper Finder] [http-nio-9090-exec-6] c.p.controller.PaperSearchController     : ✅ [SUCCESS] Found 20 papers in 0ms
+2026-04-05T20:23:35.531+05:30  INFO 13460 --- [AI Research Paper Finder] [RMI TCP Connection(9)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
